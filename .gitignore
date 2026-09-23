@@ -1,0 +1,99 @@
+# ============================================
+# ClientFlow SaaS - Git Ignore
+# ============================================
+
+
+# ---------- Python ----------
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+
+
+# ---------- Virtual Environments ----------
+venv/
+.venv/
+env/
+ENV/
+
+
+# ---------- Django ----------
+*.log
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+
+# Generated static files
+staticfiles/
+
+# User uploaded files
+media/
+
+
+# ---------- Environment Variables ----------
+.env
+.env.local
+.env.development
+.env.production
+.env.test
+
+# Keep example environment file
+!.env.example
+
+
+# ---------- Node / React ----------
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+frontend/dist/
+frontend/build/
+
+.cache/
+.vite/
+
+
+# ---------- Testing / Coverage ----------
+.coverage
+.coverage.*
+htmlcov/
+.pytest_cache/
+.tox/
+coverage.xml
+
+
+# ---------- IDE ----------
+.vscode/
+.idea/
+*.swp
+*.swo
+
+
+# ---------- OS Files ----------
+.DS_Store
+Thumbs.db
+desktop.ini
+
+
+# ---------- Docker ----------
+*.pid
+
+
+# ---------- Temporary Files ----------
+*.tmp
+*.temp
+*.bak
+*.cache
+
+
+# ---------- Logs ----------
+logs/
+*.log
