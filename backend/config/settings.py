@@ -52,7 +52,17 @@ INSTALLED_APPS = [
     "corsheaders",
     "django_filters",
     "drf_spectacular",
+
+    # ClientFlow SaaS Applications
+    "accounts",
+    "workspaces",
+    "crm",
+    "projects",
+    "billing",
+    "support",
 ]
+
+AUTH_USER_MODEL = "accounts.User"
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
