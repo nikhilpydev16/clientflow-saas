@@ -1,6 +1,8 @@
 
+from django.contrib.auth import get_user_model
 from rest_framework import serializers
-from .models import Workspace
+
+from .models import Workspace, WorkspaceMembership
 
 
 class WorkspaceSerializer(serializers.ModelSerializer):
@@ -44,3 +46,64 @@ class WorkspaceSerializer(serializers.ModelSerializer):
             )
 
         return value
+
+
+
+class WorkspaceMemberCreateSerializer(serializers.ModelSerializer):
+    user_id = serializers.PrimaryKeyRelatedField(
+        source="user",
+        queryset=get_user_model().objects.all(),
+        write_only=True,
+    )
+
+    role = serializers.ChoiceField(
+        choices=[
+            WorkspaceMembership.Role.ADMIN,
+            WorkspaceMembership.Role.MEMBER,
+        ],
+        default=WorkspaceMembership.Role.MEMBER,
+    )
+
+    class Meta:
+        model = WorkspaceMembership
+        fields = ["user_id", "role"]
+
+    def validate(self, attrs):
+        workspace = self.context.get("workspace")
+
+        if workspace is None:
+            raise serializers.ValidationError(
+                "Workspace context is required."
+            )
+
+        if WorkspaceMembership.objects.filter(
+            workspace=workspace,
+            user=attrs["user"],
+        ).exists():
+            raise serializers.ValidationError({
+                "user_id": "User is already a workspace member."
+            })
+
+        return attrs
+
+
+class WorkspaceMemberListSerializer(serializers.ModelSerializer):
+    user_id = serializers.ReadOnlyField()
+    email = serializers.EmailField(
+        source="user.email",
+        read_only=True,
+    )
+
+    class Meta:
+        model = WorkspaceMembership
+
+        fields = [
+            "id",
+            "user_id",
+            "email",
+            "role",
+            "is_active",
+            "joined_at",
+        ]
+
+        read_only_fields = fields
